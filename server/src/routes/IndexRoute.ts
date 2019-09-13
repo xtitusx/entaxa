@@ -43,4 +43,6 @@ export class IndexRoute {
     }
 }
 
-export default new IndexRoute();
+const indexRoute = new IndexRoute();
+
+export { indexRoute };

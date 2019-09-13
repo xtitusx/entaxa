@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import express from 'express';
 import * as http from 'http';
 
-import IndexRoute from './routes/IndexRoute';
+import { indexRoute } from './routes/IndexRoute';
 
 /**
  * @class Server
@@ -20,7 +20,7 @@ class Server {
     private middleware(): void {}
 
     private routes() {
-        this.app.use(IndexRoute.router);
+        this.app.use(indexRoute.router);
     }
 }
 export default new Server();
