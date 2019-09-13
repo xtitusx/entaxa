@@ -1,0 +1,39 @@
+{
+  "name": "entaxa-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/server.ts",
+  "scripts": {
+    "start": "npm run serve",
+    "build": " npm run build-ts",
+    "serve": "node ./dist/server.js",
+    "build-start": "npm run build && npm run start",
+    "start:local": "NODE_ENV=local npm run start",
+    "start-nodemon:local": "NODE_ENV=local nodemon ./dist/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier --write \"src/**/*.ts\"",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xtitusx/entaxa.git"
+  },
+  "author": "Benjamin Tussac",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "http": "0.0.0",
+    "ts-node": "^8.3.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.1",
+    "@types/node": "^12.7.4",
+    "nodemon": "^1.19.2",
+    "prettier": "1.18.2",
+    "tslint": "^5.20.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "^3.6.2"
+  }
+}
