@@ -23,7 +23,9 @@ class Server {
         this.app.use(indexRoute.router);
     }
 }
+
 export default new Server();
+
 const port = normalizePort(process.env.PORT || 3000);
 
 const server = http.createServer(new Server().app.set('port', port));

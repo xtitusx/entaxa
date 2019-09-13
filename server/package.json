@@ -2,18 +2,16 @@
   "name": "entaxa-server",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/server.ts",
+  "main": "src/server.ts",
   "scripts": {
     "start": "npm run serve",
-    "build": " npm run build-ts",
-    "serve": "node ./dist/server.js",
-    "build-start": "npm run build && npm run start",
-    "start:local": "NODE_ENV=local npm run start",
-    "start-nodemon:local": "NODE_ENV=local nodemon ./dist/server.js",
+    "build": "npm run build-ts",
+    "serve": "node dist/server.js",
+    "watch-node": "nodemon dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prettier": "prettier --write \"src/**/*.ts\"",
     "build-ts": "tsc",
-    "watch-ts": "tsc -w"
+    "watch-ts": "tsc -w",
+    "prettier": "prettier --write \"src/**/*.ts\""
   },
   "repository": {
     "type": "git",
