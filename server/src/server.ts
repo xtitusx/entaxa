@@ -1,34 +1,11 @@
 import chalk from 'chalk';
-import express from 'express';
 import * as http from 'http';
 
-import { indexRoute } from './routes/IndexRoute';
-
-/**
- * @class Server
- */
-class Server {
-    public app: express.Application;
-
-    constructor() {
-        this.app = express();
-        this.middleware();
-        this.routes();
-    }
-
-    // Configure Express middleware.
-    private middleware(): void {}
-
-    private routes() {
-        this.app.use(indexRoute.router);
-    }
-}
-
-export default new Server();
+import app from './app';
 
 const port = normalizePort(process.env.PORT || 3000);
+const server = http.createServer(app.set('port', port));
 
-const server = http.createServer(new Server().app.set('port', port));
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
@@ -39,8 +16,13 @@ server.on('connection', (socket) => {
 });
 
 /**
- * Fonction qui normalise/formate la valeur du port
+ * Fonction qui normalise/formate la valeur du port.
  * @param val
+ * @return
+ * - number : Si val est un nombre > 0.
+ * - number : Si val est une chaîne de caractères numériques > 0.
+ * - string : Si val est une chaîne de caractères non numériques.
+ * - boolean : false.
  */
 function normalizePort(val: number | string): number | string | boolean {
     const port: number = typeof val === 'string' ? parseInt(val, 10) : val;
@@ -54,7 +36,7 @@ function normalizePort(val: number | string): number | string | boolean {
 }
 
 /**
- * Fonction qui permet la gestion des erreurs lors du lancement du serveur
+ * Fonction qui permet la gestion des erreurs lors du lancement du serveur.
  * @param error
  */
 function onError(error: NodeJS.ErrnoException): void {
@@ -77,7 +59,7 @@ function onError(error: NodeJS.ErrnoException): void {
 }
 
 /**
- * Fonction qui permet le lancement du serveur sur une adresse et un port spécifiques et qui attend des requêtes
+ * Fonction qui permet le lancement du serveur sur une adresse et un port spécifiques et qui attend des requêtes.
  */
 function onListening(): void {
     const addr = server.address();
