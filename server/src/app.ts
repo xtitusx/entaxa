@@ -1,10 +1,13 @@
+import * as bodyParser from 'body-parser';
 import express from 'express';
+import helmet from 'helmet';
 import * as httpContext from 'express-http-context';
 import morgan from 'morgan';
 import * as mung from 'express-mung';
 import * as uuid from 'uuid';
 import { indexRoute } from './routes/index-route';
 import { MimeUtils, MimeType } from './utils/mime-utils';
+import commonConfig from './config/common-config';
 
 const app = express();
 initPreMiddlewares();
@@ -13,12 +16,14 @@ initPostMiddlewares();
 
 function initPreMiddlewares() {
     initMorganMiddleware();
-
     app.use(httpContext.middleware);
     app.use((req, res, next) => {
-        httpContext.set('reqId', uuid.v1());
+        httpContext.set(commonConfig.request.httpContext, uuid.v1());
         next();
     });
+    app.use(bodyParser.json({ limit: commonConfig.bodyParserLimit }));
+    app.use(bodyParser.urlencoded({ limit: commonConfig.bodyParserLimit, extended: true }));
+    app.use(helmet);
 }
 
 function routes() {
