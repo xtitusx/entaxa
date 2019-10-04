@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { helloworldRoute } from './HellowordRoute';
+import { helloworldRoute } from './helloworld-route';
 
 export class IndexRoute {
     public router: Router;
@@ -9,20 +9,6 @@ export class IndexRoute {
         this.routes();
     }
     public routes(): any {
-        // TODO : Supprimer dès que le logger Morgan est mis en place.
-        this.router.use(
-            '*',
-            (req, res, next) => {
-                console.log('Request URL:', req.originalUrl);
-                next();
-            },
-
-            (req, res, next) => {
-                console.log('Request Type:', req.method);
-                next();
-            }
-        );
-
         /** Routes à utiliser */
         this.router.use('/helloworld', helloworldRoute.router);
         /** Route principal / status serveur */
