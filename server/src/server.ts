@@ -2,8 +2,9 @@ import chalk from 'chalk';
 import * as http from 'http';
 
 import app from './app';
+import commonConfig from './config/common-config';
 
-const port = normalizePort(process.env.PORT || 3000);
+const port = normalizePort(process.env.PORT || commonConfig.server.defaultPort);
 const server = http.createServer(app.set('port', port));
 
 server.listen(port);
@@ -11,7 +12,7 @@ server.on('error', onError);
 server.on('listening', onListening);
 server.on('connection', (socket) => {
     console.log('A new connection was made by a client.');
-    socket.setTimeout(720 * 1000);
+    socket.setTimeout(commonConfig.server.socketTimeout);
     // 30 second timeout. Change this as you see fit.
 });
 

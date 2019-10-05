@@ -1,6 +1,10 @@
 const commonConfig = {
     request: {
-        httpContext: 'requestId',
+        httpContext: 'requestUid',
+    },
+    server: {
+        defaultPort: 3000,
+        socketTimeout: 720 * 1000,
     },
     bodyParserLimit: '50mb',
 };

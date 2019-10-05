@@ -23,7 +23,7 @@ function initPreMiddlewares() {
     });
     app.use(bodyParser.json({ limit: commonConfig.bodyParserLimit }));
     app.use(bodyParser.urlencoded({ limit: commonConfig.bodyParserLimit, extended: true }));
-    app.use(helmet);
+    app.use(helmet());
 }
 
 function routes() {
@@ -90,6 +90,8 @@ function initMorganMiddleware() {
     );
 }
 
-function initPostMiddlewares() {}
+function initPostMiddlewares() {
+    // TODO
+}
 
 export default app;
