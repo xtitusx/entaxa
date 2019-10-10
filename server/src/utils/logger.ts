@@ -28,7 +28,7 @@ export class Logger {
 
     private constructor() {
         this.winston = winston.createLogger({
-            level: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'local' ? 'silly' : 'info',
+            level: process.env.NODE_ENV === 'development' ? 'silly' : 'info',
             format: winston.format.combine(
                 winston.format.colorize(),
                 winston.format.simple(),

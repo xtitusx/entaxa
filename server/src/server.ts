@@ -2,7 +2,10 @@ import chalk from 'chalk';
 import * as http from 'http';
 
 import app from './app';
+import { EnvConfig } from './utils/env-config';
 import commonConfig from './config/common-config';
+
+EnvConfig.loadEnvFile();
 
 const port = normalizePort(process.env.PORT || commonConfig.server.defaultPort);
 const server = http.createServer(app.set('port', port));
