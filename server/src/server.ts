@@ -2,12 +2,13 @@ import chalk from 'chalk';
 import * as http from 'http';
 
 import app from './app';
+import { DbClientService } from './services/db-client-service';
 import { EnvConfig } from './utils/env-config';
 import commonConfig from './config/common-config';
 
-EnvConfig.loadEnvFile();
+EnvConfig.load();
 
-const port = normalizePort(process.env.PORT || commonConfig.server.defaultPort);
+const port = normalizePort(process.env.SERVER_PORT || commonConfig.server.defaultPort);
 const server = http.createServer(app.set('port', port));
 
 server.listen(port);
@@ -65,7 +66,7 @@ function onError(error: NodeJS.ErrnoException): void {
 /**
  * Fonction qui permet le lancement du serveur sur une adresse et un port spécifiques et qui attend des requêtes.
  */
-function onListening(): void {
+async function onListening(): Promise<void> {
     const addr = server.address();
     const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
     console.log('\n');
@@ -80,4 +81,27 @@ function onListening(): void {
     }
     console.log('\n');
     console.log('[server] - Node server listening on ' + chalk.blueBright(bind));
+
+    try {
+        if (commonConfig.dbClientCache.enabled === true && commonConfig.dbClientCache.duration) {
+            const sleepDuration = commonConfig.dbClientCache.duration / 2;
+
+            while (true) {
+                DbClientService.cleanDbClientCache();
+                console.log(`Take a nap for ${sleepDuration} minutes 💤 💤 💤`);
+                await sleep(sleepDuration);
+                console.log('Time to wake up ⏰ ⏰ ⏰');
+            }
+        }
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+/**
+ * Fonction qui déclenche une minuterie d'après un délai.
+ * @param mn number : Délai en minute.
+ */
+function sleep(mn: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, 1 * mn * 60 * 1000));
 }

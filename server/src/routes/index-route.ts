@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { helloworldRoute } from './helloworld-route';
+import { userRoute, usersRoute } from './user-route';
 
 export class IndexRoute {
     public router: Router;
@@ -11,6 +12,8 @@ export class IndexRoute {
     public routes(): any {
         /** Routes à utiliser */
         this.router.use('/helloworld', helloworldRoute.router);
+        this.router.use('/user', userRoute.router);
+        this.router.use('/users', usersRoute.router);
         /** Route principal / status serveur */
         this.router.get('/', (req, res) => {
             res.status(200).json({
