@@ -3,8 +3,10 @@ import * as http from 'http';
 
 import app from './app';
 import { DbClientService } from './services/db-client-service';
+import { DbClientType } from './models/db-client/db-client-type';
 import { EnvConfig } from './utils/env-config';
 import commonConfig from './config/common-config';
+import dbConfig from './config/db-config';
 
 EnvConfig.load();
 
@@ -15,10 +17,13 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 server.on('connection', (socket) => {
-    console.log('A new connection was made by a client.');
     socket.setTimeout(commonConfig.server.socketTimeout);
     // 30 second timeout. Change this as you see fit.
 });
+
+process.on('SIGINT', startGracefulShutdown);
+process.on('SIGTERM', startGracefulShutdown);
+process.on('SIGQUIT', startGracefulShutdown);
 
 /**
  * Fonction qui normalise/formate la valeur du port.
@@ -83,7 +88,11 @@ async function onListening(): Promise<void> {
     console.log('[server] - Node server listening on ' + chalk.blueBright(bind));
 
     try {
-        if (commonConfig.dbClientCache.enabled === true && commonConfig.dbClientCache.duration) {
+        if (
+            dbConfig.dbClient !== DbClientType.TYPEGOOSE && // TypeGoose non supporté par le nettoyage du cache
+            commonConfig.dbClientCache.enableCleaning === true &&
+            commonConfig.dbClientCache.duration
+        ) {
             const sleepDuration = commonConfig.dbClientCache.duration / 2;
 
             while (true) {
@@ -104,4 +113,23 @@ async function onListening(): Promise<void> {
  */
 function sleep(mn: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, 1 * mn * 60 * 1000));
+}
+
+/**
+ * Fonction qui arrête gracieusement le serveur :
+ * - Reçoit une notification d'arrêt (SIGINT).
+ * - Arrête de traiter de nouvelles requêtes.
+ * - Finit de traiter les requêtes en cours.
+ * - Libère la bases de données.
+ */
+function startGracefulShutdown() {
+    server.close(function(err: Error) {
+        if (err) {
+            console.error(err);
+            process.exit(1);
+        }
+        DbClientService.cleanDbClientCache(true);
+        console.log('Graceful Shutdown done');
+        process.exit(0);
+    });
 }

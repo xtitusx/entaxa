@@ -16,6 +16,9 @@ export class Mongoose extends DbClient<MongoDbStorage> implements IModel {
         super(storageConfig);
     }
 
+    /**
+     * @override
+     */
     public createConnection(): Promise<mongoose.Connection> {
         return new Promise(async (resolve: Function, reject: Function) => {
             try {
@@ -34,7 +37,7 @@ export class Mongoose extends DbClient<MongoDbStorage> implements IModel {
                 connectionOptions.connectTimeoutMS = dbConfig.mongoDb.connectionOptions.connectTimeoutMS;
                 connectionOptions.socketTimeoutMS = dbConfig.mongoDb.connectionOptions.socketTimeoutMS;
                 connectionOptions.family = <any>dbConfig.mongoDb.connectionOptions.family;
-                connectionOptions.useUnifiedTopology = true;
+                connectionOptions.useUnifiedTopology = dbConfig.mongoDb.connectionOptions.useUnifiedTopology;
 
                 resolve(mongoose.createConnection(this.getDbStorage().getUri(), connectionOptions));
             } catch (err) {
@@ -43,24 +46,36 @@ export class Mongoose extends DbClient<MongoDbStorage> implements IModel {
         });
     }
 
+    /**
+     * @override
+     */
     public closeConnection(): Promise<void> {
         return (<mongoose.Connection>this.connection).close();
     }
 
+    /**
+     * @override
+     */
     public getReadyState(): number {
         return (<mongoose.Connection>this.connection).readyState;
     }
 
+    /**
+     * @override
+     */
     public createModels(): void {
         this.userModel = this.getModelForModelName('user', userSchema);
     }
 
+    /**
+     * @override
+     */
     public getUserModel() {
         return this.userModel;
     }
 
     /**
-     * Méthode d'instanciation d'un modèle.
+     * Méthode qui récupère un modèle à partir d'un nom de modèle.
      * @param modelName string
      * @param schema (optionnel) mongoose.Schema<any>
      * @return mongoose.Model<InstanceType<any>, {}>

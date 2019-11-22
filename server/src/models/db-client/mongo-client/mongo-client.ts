@@ -12,6 +12,9 @@ export class MongoClient extends DbClient<MongoDbStorage> {
         super(storageConfig);
     }
 
+    /**
+     * @override
+     */
     public createConnection(): Promise<mongodb.MongoClient> {
         return new Promise(async (resolve: Function, reject: Function) => {
             try {
@@ -27,7 +30,7 @@ export class MongoClient extends DbClient<MongoDbStorage> {
                 mongoClientOptions.connectTimeoutMS = dbConfig.mongoDb.connectionOptions.connectTimeoutMS;
                 mongoClientOptions.socketTimeoutMS = dbConfig.mongoDb.connectionOptions.socketTimeoutMS;
                 mongoClientOptions.family = <any>dbConfig.mongoDb.connectionOptions.family;
-                mongoClientOptions.useUnifiedTopology = true;
+                mongoClientOptions.useUnifiedTopology = dbConfig.mongoDb.connectionOptions.useUnifiedTopology;
 
                 resolve(new mongodb.MongoClient(this.getDbStorage().getUri(), mongoClientOptions).connect());
             } catch (err) {
@@ -36,10 +39,16 @@ export class MongoClient extends DbClient<MongoDbStorage> {
         });
     }
 
+    /**
+     * @override
+     */
     public closeConnection(): Promise<void> {
         return (<mongodb.MongoClient>this.connection).close();
     }
 
+    /**
+     * @override
+     */
     public getReadyState(): number {
         return (<mongodb.MongoClient>this.connection).isConnected() ? 1 : 0;
     }

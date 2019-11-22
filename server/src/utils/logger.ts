@@ -32,9 +32,7 @@ export class Logger {
             format: winston.format.combine(
                 winston.format.colorize(),
                 winston.format.simple(),
-                winston.format.timestamp({
-                    // format: DateFormat.DATETIME_ISO8601_HHmmSS
-                }),
+                winston.format.timestamp({}),
                 winston.format.printf((info) => `${info.timestamp} ${info.level} ${info.message}`)
             ),
             transports: [new winston.transports.Console()],
@@ -58,7 +56,7 @@ export class LoggerWrapper {
      * @constructor
      */
     public constructor() {
-        /* Nullary constructor */
+        // Nullary constructor
     }
 
     /**

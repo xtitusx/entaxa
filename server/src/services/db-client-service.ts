@@ -5,7 +5,7 @@ import { DbStorage } from '../models/db-storage/db-storage';
 import { LoggerWrapper, LogLevel } from '../utils/logger';
 import dbConfig from '../config/db-config';
 
-type Etat = 'DEBUT' | 'FIN';
+type EtatNettoyage = 'DEBUT' | 'FIN';
 
 /**
  * @class DbClientService
@@ -13,12 +13,15 @@ type Etat = 'DEBUT' | 'FIN';
 export class DbClientService {
     private static readonly DB_CLIENT_CACHE = DbClientCache.getInstance();
 
-    constructor() {}
+    constructor() {
+        // Nullary constructor
+    }
 
     /**
      * Méthode qui nettoie le cache contenant une instance de 'DbClient'.
+     * @param needGracefulShutdown boolean (optionnel).
      */
-    public static cleanDbClientCache() {
+    public static cleanDbClientCache(needGracefulShutdown?: boolean) {
         const logger: LoggerWrapper = new LoggerWrapper();
 
         DbClientService.log(logger, 'DEBUT');
@@ -29,7 +32,7 @@ export class DbClientService {
         if (!DbClientService.DB_CLIENT_CACHE.getDbClient()) {
             openedDbClient = false;
             deletedDbClient = false;
-        } else if (DbClientService.DB_CLIENT_CACHE.hasExpired()) {
+        } else if (DbClientService.DB_CLIENT_CACHE.hasExpired() || needGracefulShutdown) {
             DbClientService.DB_CLIENT_CACHE.getDbClient().closeConnection();
             DbClientService.DB_CLIENT_CACHE.setDbClient(undefined);
             openedDbClient = false;
@@ -66,10 +69,10 @@ export class DbClientService {
 
     /**
      * @param logger LoggerWrapper
-     * @param etat Etat
+     * @param etat EtatNettoyage
      * @return void
      */
-    private static log(logger: LoggerWrapper, etat: Etat) {
+    private static log(logger: LoggerWrapper, etat: EtatNettoyage) {
         logger.log(LogLevel.INFO, `Nettoyage du cache contenant dbClient : ${etat}`);
     }
 }

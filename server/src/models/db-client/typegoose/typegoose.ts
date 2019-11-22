@@ -1,5 +1,5 @@
 import mongoose = require('mongoose');
-import { Typegoose as typegoose } from '@hasezoey/typegoose';
+import { getModelForClass, ReturnModelType } from '@typegoose/typegoose';
 import { DbClient } from '../db-client';
 import { IModel } from '../i-model';
 import { MongoDbStorage } from '../../db-storage/mongo-db-storage';
@@ -11,12 +11,15 @@ import { User } from './schemas/user';
  * @extends {DbClient}
  */
 export class Typegoose extends DbClient<MongoDbStorage> implements IModel {
-    private userModel: mongoose.Model<InstanceType<any>, {}> & typegoose;
+    private userModel: ReturnModelType<new () => User, unknown>;
 
     public constructor(storageConfig: MongoDbStorage) {
         super(storageConfig);
     }
 
+    /**
+     * @override
+     */
     public createConnection(): Promise<mongoose.Connection> {
         return new Promise(async (resolve: Function, reject: Function) => {
             try {
@@ -35,7 +38,7 @@ export class Typegoose extends DbClient<MongoDbStorage> implements IModel {
                 connectionOptions.connectTimeoutMS = dbConfig.mongoDb.connectionOptions.connectTimeoutMS;
                 connectionOptions.socketTimeoutMS = dbConfig.mongoDb.connectionOptions.socketTimeoutMS;
                 connectionOptions.family = <any>dbConfig.mongoDb.connectionOptions.family;
-                connectionOptions.useUnifiedTopology = true;
+                connectionOptions.useUnifiedTopology = dbConfig.mongoDb.connectionOptions.useUnifiedTopology;
 
                 resolve(mongoose.createConnection(this.getDbStorage().getUri(), connectionOptions));
             } catch (err) {
@@ -44,36 +47,44 @@ export class Typegoose extends DbClient<MongoDbStorage> implements IModel {
         });
     }
 
+    /**
+     * @override
+     */
     public closeConnection(): Promise<void> {
-        // FIXME
         return (<mongoose.Connection>this.connection).close();
     }
 
+    /**
+     * @override
+     */
     public getReadyState(): number {
         return (<mongoose.Connection>this.connection).readyState;
     }
 
+    /**
+     * @override
+     */
     public createModels(): void {
         this.userModel = this.getModelForClass(User);
     }
 
+    /**
+     * @override
+     */
     public getUserModel() {
         return this.userModel;
     }
 
     /**
-     * Méthode d'instanciation d'un modèle.
-     * @param clazz <T extends typegoose>(clazz: { new(): T }
-     * @param schemaOptions (optionnel) mongoose.SchemaOptions
-     * @return mongoose.Model<InstanceType<any>, {}> & typegoose & typeof clazz
+     * Méthode qui récupère un modèle à partir d'une classe.
+     * @param clazz <T>(clazz: { new(): T }
+     * @param schemaOptions mongoose.SchemaOptions (optionnel)
+     * @return ReturnModelType<new () => T, unknown>
      */
-    private getModelForClass<T extends typegoose>(
-        clazz: { new (): T },
-        schemaOptions?: mongoose.SchemaOptions
-    ): mongoose.Model<InstanceType<any>, {}> & typegoose & typeof clazz {
+    private getModelForClass<T>(clazz: { new (): T }, schemaOptions?: mongoose.SchemaOptions) {
         if (!schemaOptions) {
-            return new clazz().getModelForClass(clazz, { existingConnection: this.connection });
+            return getModelForClass(clazz, { existingConnection: this.connection });
         }
-        return new clazz().getModelForClass(clazz, { existingConnection: this.connection, schemaOptions });
+        return getModelForClass(clazz, { existingConnection: this.connection, schemaOptions });
     }
 }

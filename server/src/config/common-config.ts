@@ -7,7 +7,7 @@ const commonConfig = {
         socketTimeout: 720 * 1000,
     },
     dbClientCache: {
-        enabled: true,
+        enableCleaning: true,
         duration: 60, // minutes
     },
     bodyParserLimit: '50mb',

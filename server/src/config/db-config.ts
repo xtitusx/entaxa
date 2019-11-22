@@ -1,7 +1,7 @@
 import { DbClientType } from '../models/db-client/db-client-type';
 
 const dbConfig = {
-    dbClient: DbClientType.TYPEGOOSE,
+    dbClient: DbClientType.MONGOOSE,
     mongoDb: {
         connectionOptions: {
             reconnectTries: Number.MAX_VALUE,
@@ -14,6 +14,7 @@ const dbConfig = {
             useFindAndModify: false,
             autoReconnect: true,
             autoIndex: false,
+            useUnifiedTopology: true,
         },
     },
 };
