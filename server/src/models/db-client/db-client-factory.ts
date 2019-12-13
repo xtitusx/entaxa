@@ -4,8 +4,9 @@ import { IModel } from './i-model';
 import { MongoClient } from './mongo-client/mongo-client';
 import { Mongoose } from './mongoose/mongoose';
 import { Typegoose } from './typegoose/typegoose';
-import { MongoDbStorage } from '../db-storage/mongo-db-storage';
-import { DbStorage } from '../db-storage/db-storage';
+
+import { MongoDbStorage } from '@models/db-storage/mongo-db-storage';
+import { DbStorage } from '@models/db-storage/db-storage';
 
 /**
  * @description Un singleton fabriquant des instances héritant de DbClient.

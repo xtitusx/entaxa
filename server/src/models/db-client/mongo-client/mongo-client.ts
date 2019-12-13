@@ -1,7 +1,9 @@
 import mongodb = require('mongodb');
-import { DbClient } from '../db-client';
-import { MongoDbStorage } from '../../db-storage/mongo-db-storage';
-import dbConfig from '../../../config/db-config';
+
+import dbConfig from '@config/db-config';
+
+import { DbClient } from '@models/db-client/db-client';
+import { MongoDbStorage } from '@models/db-storage/mongo-db-storage';
 
 /**
  * @class MongoClient

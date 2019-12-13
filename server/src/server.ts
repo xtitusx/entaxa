@@ -1,3 +1,5 @@
+import 'module-alias/register';
+
 import chalk from 'chalk';
 import * as http from 'http';
 
@@ -108,7 +110,7 @@ async function onListening(): Promise<void> {
 }
 
 /**
- * Fonction qui déclenche une minuterie d'après un délai.
+ * Fonction qui définit un délai d'attente.
  * @param mn number : Délai en minute.
  */
 function sleep(mn: number): Promise<void> {

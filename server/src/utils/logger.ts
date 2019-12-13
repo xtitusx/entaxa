@@ -1,6 +1,7 @@
 import * as httpContext from 'express-http-context';
 import * as winston from 'winston';
-import commonConfig from '../config/common-config';
+
+import commonConfig from '@config/common-config';
 
 /**
  * @enum LogLevel
@@ -53,7 +54,7 @@ export class Logger {
  */
 export class LoggerWrapper {
     /** Constructeur du logger.
-     * @constructor
+     * @constructs
      */
     public constructor() {
         // Nullary constructor
@@ -64,14 +65,14 @@ export class LoggerWrapper {
      * @param message
      * @summary timestamp logLevel requestUid methodCallerName (methodCallerName file location) - message
      */
-    public log(logLevel: LogLevel, message: string) {
+    public log(logLevel: LogLevel, message: string): void {
         Logger.getInstance().log(
             logLevel,
             `${httpContext.get(commonConfig.request.httpContext)} ${this.getMethodCallerName()} - ${message}`
         );
     }
 
-    private getMethodCallerName() {
+    private getMethodCallerName(): string {
         const stackTrace: Array<string> = new Error().stack.split('at ');
 
         return stackTrace[3]

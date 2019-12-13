@@ -1,10 +1,13 @@
 import mongoose = require('mongoose');
 import { getModelForClass, ReturnModelType } from '@typegoose/typegoose';
-import { DbClient } from '../db-client';
-import { IModel } from '../i-model';
-import { MongoDbStorage } from '../../db-storage/mongo-db-storage';
-import dbConfig from '../../../config/db-config';
+
 import { User } from './schemas/user';
+
+import dbConfig from '@config/db-config';
+
+import { DbClient } from '@models/db-client/db-client';
+import { IModel } from '@models/db-client/i-model';
+import { MongoDbStorage } from '@models/db-storage/mongo-db-storage';
 
 /**
  * @class Typegoose

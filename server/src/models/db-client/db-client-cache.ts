@@ -1,7 +1,10 @@
 import moment = require('moment');
+
 import { DbClient } from './db-client';
-import { DbStorage } from '../db-storage/db-storage';
-import commonConfig from '../../config/common-config';
+
+import commonConfig from '@config/common-config';
+
+import { DbStorage } from '@models/db-storage/db-storage';
 
 /**
  * @description Un singleton contenant une instance de 'DbClient'.

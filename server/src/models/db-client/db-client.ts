@@ -1,4 +1,4 @@
-import { DbStorage } from '../db-storage/db-storage';
+import { DbStorage } from '@models/db-storage/db-storage';
 
 /**
  * @class DbClient

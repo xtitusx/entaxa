@@ -8,7 +8,7 @@ export class EnvConfig {
     /**
      * Méthode qui charge les variables d'environnement.
      */
-    public static load() {
+    public static load(): void {
         let path: string;
 
         switch (process.env.NODE_ENV) {

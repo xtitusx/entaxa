@@ -1,4 +1,4 @@
-import { DbClientType } from '../models/db-client/db-client-type';
+import { DbClientType } from '@models/db-client/db-client-type';
 
 const dbConfig = {
     dbClient: DbClientType.MONGOOSE,

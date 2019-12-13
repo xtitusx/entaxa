@@ -5,9 +5,10 @@ import * as httpContext from 'express-http-context';
 import morgan from 'morgan';
 import * as mung from 'express-mung';
 import * as uuid from 'uuid';
-import { indexRoute } from './routes/index-route';
-import { MimeUtils, MimeType } from './utils/mime-utils';
-import commonConfig from './config/common-config';
+
+import commonConfig from '@config/common-config';
+import { indexRoute } from '@routes/index-route';
+import { MimeUtils, MimeType } from '@utils/mime-utils';
 
 const app = express();
 initPreMiddlewares();

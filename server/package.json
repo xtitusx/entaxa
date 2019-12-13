@@ -19,6 +19,17 @@
   },
   "author": "Benjamin Tussac",
   "license": "ISC",
+  "_moduleAliases": {
+    "@config": "dist/config",
+    "@errors": "dist/errors",
+    "@middlewares": "dist/middlewares",
+    "@models": "dist/models",
+    "@mongoose-schemas": "dist/models/db-client/mongoose/schemas",
+    "@typegoose-schemas": "dist/models/db-client/mongoose/schemas",
+    "@routes": "dist/routes",
+    "@services": "dist/services",
+    "@utils": "dist/utils"
+  },
   "dependencies": {
     "@typegoose/typegoose": "^6.1.5",
     "dotenv": "^8.1.0",
@@ -27,6 +38,7 @@
     "express-mung": "^0.5.1",
     "helmet": "^3.21.1",
     "http": "0.0.0",
+    "module-alias": "^2.2.2",
     "moment-timezone": "^0.5.26",
     "mongoose": "^5.7.12",
     "morgan": "^1.9.1",

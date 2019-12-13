@@ -1,7 +1,10 @@
 import { Request, Response, Router, NextFunction } from 'express';
-import { DbClientService } from '../services/db-client-service';
-import { Typegoose } from '../models/db-client/typegoose/typegoose';
-import { LoggerWrapper, LogLevel } from '../utils/Logger';
+
+import { Typegoose } from '@models/db-client/typegoose/typegoose';
+
+import { DbClientService } from '@services/db-client-service';
+
+import { LoggerWrapper, LogLevel } from '@utils/Logger';
 
 class UserRoute {
     public router: Router;
