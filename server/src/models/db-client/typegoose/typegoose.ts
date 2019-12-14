@@ -80,9 +80,9 @@ export class Typegoose extends DbClient<MongoDbStorage> implements IModel {
 
     /**
      * Méthode qui récupère un modèle à partir d'une classe.
-     * @param clazz <T>(clazz: { new(): T }
-     * @param schemaOptions mongoose.SchemaOptions (optionnel)
-     * @return ReturnModelType<new () => T, unknown>
+     * @param {T} clazz
+     * @param {mongoose.SchemaOptions} [schemaOptions]
+     * @returns {ReturnModelType<new () => T, unknown>}
      */
     private getModelForClass<T>(clazz: { new (): T }, schemaOptions?: mongoose.SchemaOptions) {
         if (!schemaOptions) {

@@ -10,7 +10,8 @@ import { MongoDbStorage } from '@models/db-storage/mongo-db-storage';
 
 /**
  * @class Mongoose
- * @extends {DbClient}
+ * @extends {DbClient<MongoDbStorage>}
+ * @implements {IModel}
  */
 export class Mongoose extends DbClient<MongoDbStorage> implements IModel {
     private userModel: mongoose.Model<InstanceType<any>, {}>;
@@ -79,9 +80,9 @@ export class Mongoose extends DbClient<MongoDbStorage> implements IModel {
 
     /**
      * Méthode qui récupère un modèle à partir d'un nom de modèle.
-     * @param modelName string
-     * @param schema (optionnel) mongoose.Schema<any>
-     * @return mongoose.Model<InstanceType<any>, {}>
+     * @param {string} modelName
+     * @param  {mongoose.Schema<any>} [schema]
+     * @returns {mongoose.Model<InstanceType<any>, {}>}
      */
     private getModelForModelName(
         modelName: string,

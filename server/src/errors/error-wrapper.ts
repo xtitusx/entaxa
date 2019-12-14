@@ -3,7 +3,7 @@ import { ErrorResponse } from './error-response';
 /**
  * @description Enrobeur d'Error, enrichie des paramètres nécessaires à la construction de l'objet "Response".
  * @class ErrorWrapper
- * @extends Error
+ * @extends {Error}
  */
 export class ErrorWrapper extends Error {
     private errorResponse: ErrorResponse;

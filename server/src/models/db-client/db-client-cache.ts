@@ -41,11 +41,15 @@ export class DbClientCache {
 
     /**
      * Méthode qui rafraîchit l'horodatage du dernier appel.
+     * @returns {void}
      */
     public refreshLastCallDate() {
         this.lastCallDate = moment();
     }
 
+    /**
+     * @returns {boolean}
+     */
     public hasExpired(): boolean {
         const expirationDate = moment(this.lastCallDate).add(DbClientCache.DURATION, 'minute');
 

@@ -28,13 +28,13 @@ process.on('SIGTERM', startGracefulShutdown);
 process.on('SIGQUIT', startGracefulShutdown);
 
 /**
- * Fonction qui normalise/formate la valeur du port.
- * @param val
- * @return
+ * Fonction qui normalise/formate la valeur du port et retourne une valeur de type :
  * - number : Si val est un nombre > 0.
  * - number : Si val est une chaîne de caractères numériques > 0.
  * - string : Si val est une chaîne de caractères non numériques.
  * - boolean : false.
+ * @param val
+ * @returns {number | string | boolean}
  */
 function normalizePort(val: number | string): number | string | boolean {
     const port: number = typeof val === 'string' ? parseInt(val, 10) : val;

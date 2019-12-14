@@ -1,6 +1,6 @@
-/**
- * @enum DbClientType
- * @description La liste des drivers DB/ODM/ORM supportés.
+/** DbClientType - La liste des drivers DB/ODM/ORM supportés.
+ * @readonly
+ * @enum {string}
  */
 export enum DbClientType {
     MONGOCLIENT = 'MongoClient',

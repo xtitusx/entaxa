@@ -7,6 +7,7 @@ import * as dotenv from 'dotenv';
 export class EnvConfig {
     /**
      * Méthode qui charge les variables d'environnement.
+     * @returns {void}
      */
     public static load(): void {
         let path: string;

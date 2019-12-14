@@ -27,8 +27,8 @@ export class DbClientFactory {
 
     /**
      * Méthode qui instancie une classe héritant de DbClient.
-     * @param dbClientType DbClientType
-     * @return Promise<DbClient<DbStorage>>
+     * @param {DbClientType} dbClientType
+     * @returns {Promise<DbClient<DbStorage>>}
      * @throws {RangeError} Si la valeur de la variable'dbClientType' est incorrecte.
      */
     public async create(dbClientType: DbClientType): Promise<DbClient<DbStorage>> {

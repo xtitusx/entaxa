@@ -1,5 +1,9 @@
 import * as express from 'express';
 
+/** MimeType
+ * @readonly
+ * @enum {string}
+ */
 export enum MimeType {
     PNG = 'image/png',
     JPG = 'image/jpeg',
@@ -14,14 +18,17 @@ export enum MimeType {
     ZIP = 'application/zip',
 }
 
+/**
+ * @class MimeUtils
+ */
 export class MimeUtils {
     private static readonly CONTENT_TYPE: string = 'content-type';
 
     /**
      * Méthode qui retourne 'true' si le header de la réponse contient l'en-tête 'content-type' avec le type MIME passé en paramètre.
-     * @param res express.Response
-     * @param mimeType MimeType
-     * @return boolean
+     * @param {express.Response} res
+     * @param {MimeType} mimeType
+     * @returns {boolean}
      */
     public static checkResponseContentType(res: express.Response, mimeType: MimeType): boolean {
         return (

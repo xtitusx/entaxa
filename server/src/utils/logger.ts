@@ -3,9 +3,9 @@ import * as winston from 'winston';
 
 import commonConfig from '@config/common-config';
 
-/**
- * @enum LogLevel
- * @summary npm logging levels
+/** Npm logging levels
+ * @readonly
+ * @enum {string}
  */
 export enum LogLevel {
     ERROR = 'error',
@@ -53,17 +53,15 @@ export class Logger {
  * @class LoggerWrapper
  */
 export class LoggerWrapper {
-    /** Constructeur du logger.
-     * @constructs
-     */
     public constructor() {
         // Nullary constructor
     }
 
     /**
-     * @param logLevel
-     * @param message
      * @summary timestamp logLevel requestUid methodCallerName (methodCallerName file location) - message
+     * @param {LogLevel} logLevel
+     * @param {string} message
+     * @returns {void}
      */
     public log(logLevel: LogLevel, message: string): void {
         Logger.getInstance().log(

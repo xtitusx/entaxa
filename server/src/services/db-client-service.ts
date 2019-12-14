@@ -21,7 +21,8 @@ export class DbClientService {
 
     /**
      * Méthode qui nettoie le cache contenant une instance de 'DbClient'.
-     * @param needGracefulShutdown boolean (optionnel).
+     * @param {boolean} [needGracefulShutdown]
+     * @returns {void}
      */
     public static cleanDbClientCache(needGracefulShutdown?: boolean) {
         const logger: LoggerWrapper = new LoggerWrapper();
@@ -50,8 +51,8 @@ export class DbClientService {
     }
 
     /**
-     * Méthode qui retourne une instance mise en cache de 'DbClient' :
-     * @return Promise<DbClient<DbStorage>>
+     * Méthode qui retourne une instance mise en cache de 'DbClient'.
+     * @returns {Promise<DbClient<DbStorage>>}
      */
     public getDbClient(): Promise<DbClient<DbStorage>> {
         return new Promise(async (resolve, reject) => {
@@ -70,11 +71,11 @@ export class DbClientService {
     }
 
     /**
-     * @param logger LoggerWrapper
-     * @param etat EtatNettoyage
-     * @return void
+     * @param {LoggerWrapper} logger
+     * @param {EtatNettoyage} etat
+     * @returns {void}
      */
-    private static log(logger: LoggerWrapper, etat: EtatNettoyage) {
+    private static log(logger: LoggerWrapper, etat: EtatNettoyage): void {
         logger.log(LogLevel.INFO, `Nettoyage du cache contenant dbClient : ${etat}`);
     }
 }

@@ -1,7 +1,8 @@
 import { DbStorage } from '@models/db-storage/db-storage';
 
 /**
- * @class DbClient
+ * @abstract
+ * @class DbClient<T extends DbStorage>
  */
 export abstract class DbClient<T extends DbStorage> {
     protected dbStorage: T;
@@ -25,13 +26,13 @@ export abstract class DbClient<T extends DbStorage> {
 
     /**
      * Méthode qui crée une instance de connexion à la base de données.
-     * @return Promise<any>
+     * @returns Promise<any>
      */
     public abstract createConnection(): Promise<any>;
 
     /**
      * Méthode qui clôt l'instance de connexion à la base de données.
-     * @return Promise<void>
+     * @returns Promise<void>
      */
     public abstract closeConnection(): Promise<void>;
 
@@ -41,7 +42,7 @@ export abstract class DbClient<T extends DbStorage> {
      * - 1 = connected.
      * - 2 = connecting.
      * - 3 = disconnecting.
-     * @return number
+     * @returns number
      */
     public abstract getReadyState(): number;
 }

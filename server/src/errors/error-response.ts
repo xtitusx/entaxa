@@ -1,3 +1,6 @@
+/**
+ * @class ErrorResponse
+ */
 export class ErrorResponse {
     private key: string;
     private description: string;

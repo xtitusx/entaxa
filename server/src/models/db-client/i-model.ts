@@ -1,7 +1,10 @@
+/**
+ * @interface
+ */
 export interface IModel {
     /**
      * Méthode qui crée les instances des modèles.
-     * @return void
+     * @returns void
      */
     createModels(): void;
 

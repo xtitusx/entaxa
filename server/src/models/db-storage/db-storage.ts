@@ -1,4 +1,5 @@
 /**
+ * @abstract
  * @class DbStorage
  */
 export abstract class DbStorage {
