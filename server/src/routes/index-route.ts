@@ -14,11 +14,20 @@ export class IndexRoute {
         this.router.use('/helloworld', helloworldRoute.router);
         this.router.use('/user', userRoute.router);
         this.router.use('/users', usersRoute.router);
-        /** Route principal / status serveur */
+        /** Route principal / état serveur */
         this.router.get('/', (req, res) => {
-            res.status(200).json({
-                success: true,
-                message: process.env.npm_package_name + ' v' + process.env.npm_package_version,
+            let version = '0';
+            let error = false;
+            try {
+                version = require('../../package.json').version;
+            } catch (err) {
+                error = true;
+                console.log(err);
+            }
+            res.json({
+                version,
+                error,
+                message: 'Entaxa server is running...',
             });
         });
 
