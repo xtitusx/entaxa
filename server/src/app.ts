@@ -7,6 +7,7 @@ import * as mung from 'express-mung';
 import * as uuid from 'uuid';
 
 import commonConfig from '@config/common-config';
+import { errorHandler } from '@middlewares/error-handler';
 import { indexRoute } from '@routes/index-route';
 import { MimeUtils, MimeType } from '@utils/mime-utils';
 
@@ -92,7 +93,7 @@ function initMorganMiddleware() {
 }
 
 function initPostMiddlewares() {
-    // TODO
+    app.use(errorHandler);
 }
 
 export default app;

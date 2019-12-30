@@ -4,9 +4,10 @@ import { IModel } from './i-model';
 import { MongoClient } from './mongo-client/mongo-client';
 import { Mongoose } from './mongoose/mongoose';
 import { Typegoose } from './typegoose/typegoose';
-
+import dbConfig from '@config/db-config';
 import { MongoDbStorage } from '@models/db-storage/mongo-db-storage';
 import { DbStorage } from '@models/db-storage/db-storage';
+import { EnumUtils } from '@utils/enum-utils';
 
 /**
  * @description Un singleton fabriquant des instances héritant de DbClient.
@@ -29,7 +30,7 @@ export class DbClientFactory {
      * Méthode qui instancie une classe héritant de DbClient.
      * @param {DbClientType} dbClientType
      * @returns {Promise<DbClient<DbStorage>>}
-     * @throws {RangeError} Si la valeur de la variable'dbClientType' est incorrecte.
+     * @throws {RangeError} Si la valeur de la variable d'environnement "db-config.dbClient" dans "config/db-config.ts" est incorrecte ou non gérée.
      */
     public async create(dbClientType: DbClientType): Promise<DbClient<DbStorage>> {
         let dbClient: DbClient<DbStorage>;
@@ -57,10 +58,9 @@ export class DbClientFactory {
                 break;
             }
             default: {
+                EnumUtils.validate(DbClientType, dbConfig.dbClient);
                 throw new RangeError(
-                    `La valeur 'dbClientType' est incorrecte (${dbClientType}), valeurs autorisées : ${Object.values(
-                        DbClientType
-                    )}`
+                    `L'évaluation de l'expression 'dbConfig.dbClient' n'a pas de cas associé au résultat obtenu '${dbConfig.dbClient}'`
                 );
             }
         }

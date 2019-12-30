@@ -1,18 +1,18 @@
 import { DbClientType } from '@models/db-client/db-client-type';
 
 const dbConfig = {
-    dbClient: DbClientType.MONGOOSE,
+    dbClient: DbClientType.MONGOCLIENT,
     mongoDb: {
         connectionOptions: {
-            reconnectTries: Number.MAX_VALUE,
+            reconnectTries: 3,
             poolSize: 5,
             bufferMaxEntries: 0,
-            connectTimeoutMS: 30000,
+            connectTimeoutMS: 10000,
             socketTimeoutMS: 45000,
             family: 4,
             useCreateIndex: true,
             useFindAndModify: false,
-            autoReconnect: true,
+            autoReconnect: false,
             autoIndex: false,
             useUnifiedTopology: true,
         },

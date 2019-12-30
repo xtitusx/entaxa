@@ -1,9 +1,7 @@
 import moment = require('moment');
 
 import { DbClient } from './db-client';
-
 import commonConfig from '@config/common-config';
-
 import { DbStorage } from '@models/db-storage/db-storage';
 
 /**

@@ -10,6 +10,7 @@ export abstract class DbStorage {
     private user: string;
     private password: string;
     private uri: string;
+    private uriWithCreds: string;
 
     public constructor(host: string, port: number, protocol: string, database: string, user: string, password: string) {
         this.host = host;
@@ -74,5 +75,13 @@ export abstract class DbStorage {
 
     public setUri(uri: string) {
         this.uri = uri;
+    }
+
+    public getUriWithCreds() {
+        return this.uriWithCreds;
+    }
+
+    public setUriWithCreds(uriWithCreds: string) {
+        this.uriWithCreds = uriWithCreds;
     }
 }

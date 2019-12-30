@@ -1,7 +1,6 @@
 import mongodb = require('mongodb');
 
 import dbConfig from '@config/db-config';
-
 import { DbClient } from '@models/db-client/db-client';
 import { MongoDbStorage } from '@models/db-storage/mongo-db-storage';
 
@@ -21,12 +20,8 @@ export class MongoClient extends DbClient<MongoDbStorage> {
         return new Promise(async (resolve: Function, reject: Function) => {
             try {
                 let mongoClientOptions: mongodb.MongoClientOptions = {};
-                mongoClientOptions.auth = {
-                    user: this.getDbStorage().getUser(),
-                    password: this.getDbStorage().getPassword(),
-                };
+
                 mongoClientOptions.useNewUrlParser = this.getDbStorage().hasNewUrlParser();
-                mongoClientOptions.reconnectTries = dbConfig.mongoDb.connectionOptions.reconnectTries;
                 mongoClientOptions.poolSize = dbConfig.mongoDb.connectionOptions.poolSize;
                 mongoClientOptions.bufferMaxEntries = dbConfig.mongoDb.connectionOptions.bufferMaxEntries;
                 mongoClientOptions.connectTimeoutMS = dbConfig.mongoDb.connectionOptions.connectTimeoutMS;
@@ -34,7 +29,7 @@ export class MongoClient extends DbClient<MongoDbStorage> {
                 mongoClientOptions.family = <any>dbConfig.mongoDb.connectionOptions.family;
                 mongoClientOptions.useUnifiedTopology = dbConfig.mongoDb.connectionOptions.useUnifiedTopology;
 
-                resolve(new mongodb.MongoClient(this.getDbStorage().getUri(), mongoClientOptions).connect());
+                resolve(new mongodb.MongoClient(this.getDbStorage().getUriWithCreds(), mongoClientOptions).connect());
             } catch (err) {
                 reject(err);
             }

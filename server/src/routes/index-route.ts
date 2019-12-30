@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { helloworldRoute } from './helloworld-route';
 import { userRoute, usersRoute } from './user-route';
+import { dbClientMiddleware } from '@middlewares/db-client-middleware';
 
 export class IndexRoute {
     public router: Router;
@@ -12,8 +13,8 @@ export class IndexRoute {
     public routes(): any {
         /** Routes à utiliser */
         this.router.use('/helloworld', helloworldRoute.router);
-        this.router.use('/user', userRoute.router);
-        this.router.use('/users', usersRoute.router);
+        this.router.use('/user', dbClientMiddleware, userRoute.router);
+        this.router.use('/users', dbClientMiddleware, usersRoute.router);
         /** Route principal / état serveur */
         this.router.get('/', (req, res) => {
             let version = '0';

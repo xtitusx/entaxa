@@ -15,6 +15,13 @@ export class MongoDbStorage extends DbStorage {
 
     private init() {
         this.setUri(`${this.getProtocol()}://${this.getHost()}:${this.getPort()}/${this.getDatabase()}`);
+
+        this.setUriWithCreds(
+            this.getUser() && this.getPassword()
+                ? `${this.getProtocol()}://${this.getUser()}:${this.getPassword()}@${this.getHost()}:${this.getPort()}/${this.getDatabase()}`
+                : this.getUri()
+        );
+
         this.useNewUrlParser = true;
     }
 

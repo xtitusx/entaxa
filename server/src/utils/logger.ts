@@ -37,6 +37,7 @@ export class Logger {
                 winston.format.printf((info) => `${info.timestamp} ${info.level} ${info.message}`)
             ),
             transports: [new winston.transports.Console()],
+            silent: process.env.MOCHA_TEST === '1' ? true : false,
         });
     }
 

@@ -1,10 +1,10 @@
 import dbConfig from '@config/db-config';
-
+import { ErrorWrapper } from '@errors/error-wrapper';
+import { StaticErrorResponse } from '@errors/static-error-response';
 import { DbClient } from '@models/db-client/db-client';
 import { DbClientCache } from '@models/db-client/db-client-cache';
 import { DbClientFactory } from '@models/db-client/db-client-factory';
 import { DbStorage } from '@models/db-storage/db-storage';
-
 import { LoggerWrapper, LogLevel } from '@utils/logger';
 
 type EtatNettoyage = 'DEBUT' | 'FIN';
@@ -53,6 +53,7 @@ export class DbClientService {
     /**
      * Méthode qui retourne une instance mise en cache de 'DbClient'.
      * @returns {Promise<DbClient<DbStorage>>}
+     * @throws {ErrorResponse.SERVICE_DBCLIENT_CONNECTION}
      */
     public getDbClient(): Promise<DbClient<DbStorage>> {
         return new Promise(async (resolve, reject) => {
@@ -65,7 +66,11 @@ export class DbClientService {
                 DbClientService.DB_CLIENT_CACHE.refreshLastCallDate();
                 resolve(DbClientService.DB_CLIENT_CACHE.getDbClient());
             } catch (err) {
-                reject(err);
+                reject(
+                    err instanceof ErrorWrapper
+                        ? err
+                        : new ErrorWrapper(StaticErrorResponse.SERVICE_DBCLIENT_CONNECTION, err)
+                );
             }
         });
     }

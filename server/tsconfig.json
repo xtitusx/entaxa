@@ -36,8 +36,10 @@
      "paths": {
       "@config/*": ["config/*"],
       "@errors/*": ["errors/*"],
-      "@middleware/*" : ["middlewares/*"],
+      "@middlewares/*" : ["middlewares/*"],
       "@models/*" : ["models/*"],
+      "@dao/*" : ["models/dao/*"],
+      "@dto/*" : ["models/dto/*"],
       "@mongoose-schemas/*" : ["models/db-client/mongoose/schemas/*"],
       "@typegoose-schemas/*" : ["models/db-client/mongoose/schemas/*"],
       "@routes/*" : ["routes/*"],

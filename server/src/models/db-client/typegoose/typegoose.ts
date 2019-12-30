@@ -11,7 +11,8 @@ import { MongoDbStorage } from '@models/db-storage/mongo-db-storage';
 
 /**
  * @class Typegoose
- * @extends {DbClient}
+ * @extends {DbClient<MongoDbStorage>}
+ * @implements {IModel}
  */
 export class Typegoose extends DbClient<MongoDbStorage> implements IModel {
     private userModel: ReturnModelType<new () => User, unknown>;
