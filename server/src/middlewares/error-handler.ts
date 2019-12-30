@@ -28,7 +28,8 @@ export const errorHandler: express.ErrorRequestHandler = (
     const errorResponse = errorWrapper.getErrorResponse();
     new LoggerWrapper().log(LogLevel.ERROR, chalk.bold.red(`${errorWrapper.getLogMessage()}`));
 
-    res.status(errorResponse.getStatus()).json({
+    res.status(errorResponse.getHttpStatusCode()).json({
+        code: errorResponse.getHttpStatusCode(),
         success: errorResponse.isSuccess(),
         key: errorResponse.getKey(),
         description: errorResponse.getDescription(),

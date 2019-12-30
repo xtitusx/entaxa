@@ -19,7 +19,7 @@ export class UserService extends ModelService {
     }
 
     /**
-     * Méthode qui crée un user.
+     * Méthode qui crée un utilisateur.
      * @param dto IUser
      * @return Promise<IUser>
      * @throws {ErrorResponse.SERVICE_USER_CREATION}
@@ -41,10 +41,10 @@ export class UserService extends ModelService {
     }
 
     /**
-     * Méthode qui modifie un user
+     * Méthode qui modifie un utilisateur.
      * @param id string
-     * @param currentDto ILock : L'objet contenant les chemins qui doivent être modifiés.
-     * @return Promise<IElement<any>>
+     * @param dto IUser
+     * @return Promise<IUser>>
      * @throws {ErrorResponse.SERVICE_USER_UPDATE}
      */
     public async updateUser(id: string, dto: IUser): Promise<IUser> {
@@ -61,7 +61,7 @@ export class UserService extends ModelService {
     }
 
     /**
-     * Méthode qui renvoie un user.
+     * Méthode qui renvoie un utilisateur.
      * @param id string
      * @param projection object (optionnel)
      * @return Promise<IUser>
@@ -81,7 +81,7 @@ export class UserService extends ModelService {
     }
 
     /**
-     * Méthode qui renvoie la liste des users.
+     * Méthode qui renvoie la liste des utilisateurs.
      * @param projection object (optionnel)
      * @return Promise<Array<IUser>>
      */
@@ -90,7 +90,7 @@ export class UserService extends ModelService {
     }
 
     /**
-     * Méthode qui renvoie la liste des users ; en fonction d'ids.
+     * Méthode qui renvoie la liste des utilisateurs ; en fonction d'ids.
      * @param ids Array<string>
      * @param projection object (optionnel)
      * @return Promise<Array<IUser>
@@ -100,7 +100,7 @@ export class UserService extends ModelService {
     }
 
     /**
-     * Méthode qui renvoie la liste des users ; en fonction de filtres.
+     * Méthode qui renvoie la liste des utilisateurs ; en fonction de filtres.
      * @param filters any
      * @param projection object (optionnel)
      * @return Promise<Array<IUser>
@@ -110,12 +110,12 @@ export class UserService extends ModelService {
     }
 
     /**
-     * Méthode qui supprime un user.
+     * Méthode qui supprime un utilisateur.
      * @param id string
      * @return Promise<IUser>
      * @throws {ErrorResponse.SERVICE_USER_DELETION}
      */
-    public async deleteElement(id: string): Promise<IUser> {
+    public async deleteUser(id: string): Promise<IUser> {
         const user = await this.userDao.deleteById(id);
 
         if (!user) {
@@ -129,7 +129,7 @@ export class UserService extends ModelService {
     }
 
     /**
-     * Méthode qui valide un user.
+     * Méthode qui valide un utilisateur.
      *
      * Validation dite "bas-niveau" contenue dans la couche Modèle.
      * @param dto IUser

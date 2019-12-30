@@ -9,13 +9,13 @@ import { HttpStatusCode } from '@utils/http-status-code';
 export class ErrorResponse {
     protected key: string;
     protected description: string;
-    protected status: HttpStatusCode;
+    protected httpStatusCode: HttpStatusCode;
     protected success: boolean;
 
-    public constructor(key: any, description?: string, status?: number) {
+    public constructor(key: any, description?: string, httpStatusCode?: number) {
         this.key = key;
         this.description = description;
-        this.status = status;
+        this.httpStatusCode = httpStatusCode;
         this.success = false;
     }
 
@@ -27,8 +27,8 @@ export class ErrorResponse {
         return this.description;
     }
 
-    public getStatus() {
-        return this.status;
+    public getHttpStatusCode() {
+        return this.httpStatusCode;
     }
 
     public isSuccess() {

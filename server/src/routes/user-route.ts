@@ -4,6 +4,7 @@ import { Typegoose } from '@models/db-client/typegoose/typegoose';
 import { DbClient } from '@models/db-client/db-client';
 import { UserService } from '@services/user-service';
 import { DbClientService } from '@services/db-client-service';
+import { UserMapper } from '@services/dto-view-mapper/user-mapper';
 import { HttpStatusCode } from '@utils/http-status-code';
 import { LoggerWrapper, LogLevel } from '@utils/Logger';
 
@@ -31,7 +32,7 @@ class UserRoute {
                 res.json({
                     code: HttpStatusCode.OK,
                     success: true,
-                    message: user,
+                    message: new UserMapper().dtoToView(user),
                 });
             })
             .catch((err) => {

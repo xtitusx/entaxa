@@ -1,7 +1,7 @@
 import { DbClientType } from '@models/db-client/db-client-type';
 
 const dbConfig = {
-    dbClient: DbClientType.MONGOCLIENT,
+    dbClient: DbClientType.TYPEGOOSE,
     mongoDb: {
         connectionOptions: {
             reconnectTries: 3,
