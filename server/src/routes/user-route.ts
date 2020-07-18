@@ -6,7 +6,7 @@ import { UserService } from '@services/user-service';
 import { DbClientService } from '@services/db-client-service';
 import { UserMapper } from '@services/dto-view-mapper/user-mapper';
 import { HttpStatusCode } from '@utils/http-status-code';
-import { LoggerWrapper, LogLevel } from '@utils/Logger';
+import { LoggerWrapper, LogLevel } from '@utils/logger';
 
 class UserRoute {
     public router: Router;
